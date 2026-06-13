@@ -1,0 +1,63 @@
+#define TRIG1 5
+#define ECHO1 18
+
+#define TRIG2 19
+#define ECHO2 21
+
+#define GREEN_LED 23
+#define RED_LED 22
+
+float getDistance(int trigPin, int echoPin) {
+
+  digitalWrite(trigPin, LOW);
+  delayMicroseconds(2);
+
+  digitalWrite(trigPin, HIGH);
+  delayMicroseconds(10);
+
+  digitalWrite(trigPin, LOW);
+
+  long duration = pulseIn(echoPin, HIGH);
+
+  return duration * 0.034 / 2;
+}
+
+void setup() {
+
+  Serial.begin(115200);
+
+  pinMode(TRIG1, OUTPUT);
+  pinMode(ECHO1, INPUT);
+
+  pinMode(TRIG2, OUTPUT);
+  pinMode(ECHO2, INPUT);
+
+  pinMode(GREEN_LED, OUTPUT);
+  pinMode(RED_LED, OUTPUT);
+}
+
+void loop() {
+
+  float slot1 = getDistance(TRIG1, ECHO1);
+  float slot2 = getDistance(TRIG2, ECHO2);
+
+  int occupied = 0;
+
+  if(slot1 < 10) occupied++;
+  if(slot2 < 10) occupied++;
+
+  int available = 2 - occupied;
+
+  Serial.print("Available Slots: ");
+  Serial.println(available);
+
+  if(available > 0) {
+    digitalWrite(GREEN_LED, HIGH);
+    digitalWrite(RED_LED, LOW);
+  } else {
+    digitalWrite(GREEN_LED, LOW);
+    digitalWrite(RED_LED, HIGH);
+  }
+
+  delay(2000);
+}
