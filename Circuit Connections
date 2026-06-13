@@ -1,0 +1,16 @@
+Sensor 1
+
+VCC  → 5V
+GND  → GND
+TRIG → GPIO5
+ECHO → GPIO18
+
+Sensor 2
+
+VCC  → 5V
+GND  → GND
+TRIG → GPIO19
+ECHO → GPIO21
+
+Green LED → GPIO23
+Red LED   → GPIO22
